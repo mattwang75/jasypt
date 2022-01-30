@@ -24,7 +24,7 @@
   <groupId>org.jasypt</groupId>
   <artifactId>jasypt</artifactId>
   <packaging>jar</packaging>
-  <version>1.9.4-SNAPSHOT</version>
+  <version>1.9.4-HMS-SNAPSHOT</version>
   <name>JASYPT: Java Simplified Encryption</name>
   <url>http://www.jasypt.org</url>
 
@@ -141,7 +141,7 @@
         </configuration>
       </plugin>
       
-      <plugin>
+      <!--plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-javadoc-plugin</artifactId>
         <version>3.0.1</version>
@@ -159,7 +159,7 @@
             </goals>
           </execution>
         </executions>
-      </plugin>
+      </plugin-->
       
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -175,7 +175,7 @@
         </executions>
       </plugin>
       
-      <plugin>
+      <!--plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-gpg-plugin</artifactId>
         <version>1.1</version>
@@ -188,7 +188,7 @@
             </goals>
           </execution>
         </executions>
-      </plugin>
+      </plugin-->
        
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>

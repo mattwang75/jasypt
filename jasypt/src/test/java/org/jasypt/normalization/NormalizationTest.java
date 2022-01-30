@@ -26,29 +26,7 @@ public class NormalizationTest extends TestCase {
 
     
     public void testNormalizationEquivalence() throws Exception {
-        
-        org.jasypt.normalization.Normalizer.initializeIcu4j();
-        
-        boolean executeJavaTextNorm = true;
-        try {
-            // Tests might not be executed in Java >= 6
-            org.jasypt.normalization.Normalizer.initializeJavaTextNormalizer();
-        } catch (final Exception e) {
-            executeJavaTextNorm = false;
-        }
-        
-        
-        final String msg = "ÁÉÍÓÚÀÈÌÒÙÄËÏÖÜÂÊÎÔÛÑÇÆÅßÐáéíóúàèìòùäëïöüâêîôûnçæåÞØÕÃāăþőŏœűŁňć";
-        final char[] msgCharArray = msg.toCharArray();
 
-        String norm1 = com.ibm.icu.text.Normalizer.normalize(msg, com.ibm.icu.text.Normalizer.NFC);
-        String norm2 = new String(org.jasypt.normalization.Normalizer.normalizeWithIcu4j(msgCharArray));
-        String norm3 = (executeJavaTextNorm? new String(org.jasypt.normalization.Normalizer.normalizeWithJavaNormalizer(msgCharArray)) : null);
-
-        Assert.assertEquals(norm1, norm2);
-        if (executeJavaTextNorm) {
-            Assert.assertEquals(norm2, norm3);
-        }
         
     }
     
