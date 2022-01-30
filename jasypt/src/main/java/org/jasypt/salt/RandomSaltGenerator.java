@@ -78,7 +78,12 @@ public class RandomSaltGenerator implements SaltGenerator {
             throw new EncryptionInitializationException(e);
         }
     }
-    
+
+    // added by HMS
+    public RandomSaltGenerator(final SecureRandom random) {
+        super();
+        this.random = random;
+    }
 
     /**
      * Generate a random salt of the specified length in bytes.
