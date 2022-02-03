@@ -159,7 +159,8 @@ public final class StandardPBEByteEncryptor implements PBEByteCleanablePasswordE
 
 
     // Algorithm (and provider-related info) for Password Based Encoding.
-    private String algorithm = DEFAULT_ALGORITHM;
+    private String secretKeyFactoryAlgorithm = DEFAULT_ALGORITHM;
+    private String cipherAlgorithm = DEFAULT_ALGORITHM;
     private String providerName = null;
     private Provider provider = null;
     
@@ -299,11 +300,23 @@ public final class StandardPBEByteEncryptor implements PBEByteCleanablePasswordE
         if (isInitialized()) {
             throw new AlreadyInitializedException();
         }
-        this.algorithm = algorithm;
+        this.secretKeyFactoryAlgorithm = algorithm;
+        this.cipherAlgorithm = algorithm;
         this.algorithmSet = true;
     }
-    
-    
+
+    /** Sets the SecretKeyFactory algorithm and Cipher algorithm respectively. */
+    public synchronized void setAlgorithm(String secretKeyFactoryAlgorithm, String cipherAlgorithm) {
+        CommonUtils.validateNotEmpty(secretKeyFactoryAlgorithm, "SecretKeyFactory Algorithm cannot be set empty");
+        CommonUtils.validateNotEmpty(cipherAlgorithm, "Cipher Algorithm cannot be set empty");
+        if (isInitialized()) {
+            throw new AlreadyInitializedException();
+        }
+        this.secretKeyFactoryAlgorithm = secretKeyFactoryAlgorithm;
+        this.cipherAlgorithm = cipherAlgorithm;
+        this.algorithmSet = true;
+    }
+
     /**
      * <p>
      * Sets the password to be used.
@@ -542,8 +555,11 @@ public final class StandardPBEByteEncryptor implements PBEByteCleanablePasswordE
             
             final StandardPBEByteEncryptor clone = new StandardPBEByteEncryptor();
             clone.setPasswordCharArray(copiedPassword);
-            if (CommonUtils.isNotEmpty(this.algorithm)) {
-                clone.setAlgorithm(this.algorithm);
+            if (CommonUtils.isNotEmpty(this.secretKeyFactoryAlgorithm)) {
+                clone.setAlgorithm(this.secretKeyFactoryAlgorithm);
+            }
+            if (CommonUtils.isNotEmpty(this.cipherAlgorithm)) {
+                clone.setAlgorithm(this.cipherAlgorithm);
             }
             clone.setKeyObtentionIterations(this.keyObtentionIterations);
             if (this.provider != null) {
@@ -668,9 +684,12 @@ public final class StandardPBEByteEncryptor implements PBEByteCleanablePasswordE
                 
                 final Provider configProvider = this.config.getProvider();
                 
-                this.algorithm = 
+                this.secretKeyFactoryAlgorithm =
                     ((this.algorithmSet) || (configAlgorithm == null))?
-                            this.algorithm : configAlgorithm;
+                            this.secretKeyFactoryAlgorithm : configAlgorithm;
+                this.cipherAlgorithm =
+                    ((this.algorithmSet) || (configAlgorithm == null))?
+                        this.cipherAlgorithm : configAlgorithm;
                 this.keyObtentionIterations = 
                     ((this.iterationsSet) || 
                      (configKeyObtentionIterations == null))?
@@ -731,39 +750,39 @@ public final class StandardPBEByteEncryptor implements PBEByteCleanablePasswordE
                     
                     final SecretKeyFactory factory =
                         SecretKeyFactory.getInstance(
-                                this.algorithm, 
+                                this.secretKeyFactoryAlgorithm,
                                 this.provider);
                     
                     this.key = factory.generateSecret(pbeKeySpec);
                     
                     this.encryptCipher = 
-                        Cipher.getInstance(this.algorithm, this.provider);
+                        Cipher.getInstance(this.cipherAlgorithm, this.provider);
                     this.decryptCipher = 
-                        Cipher.getInstance(this.algorithm, this.provider);
+                        Cipher.getInstance(this.cipherAlgorithm, this.provider);
                     
                 } else if (this.providerName != null) {
                     
                     final SecretKeyFactory factory =
                         SecretKeyFactory.getInstance(
-                                this.algorithm, 
+                                this.secretKeyFactoryAlgorithm,
                                 this.providerName);
                     
                     this.key = factory.generateSecret(pbeKeySpec);
                     
                     this.encryptCipher = 
-                        Cipher.getInstance(this.algorithm, this.providerName);
+                        Cipher.getInstance(this.cipherAlgorithm, this.providerName);
                     this.decryptCipher = 
-                        Cipher.getInstance(this.algorithm, this.providerName);
+                        Cipher.getInstance(this.cipherAlgorithm, this.providerName);
                     
                 } else {
                     
                     final SecretKeyFactory factory =
-                        SecretKeyFactory.getInstance(this.algorithm);
+                        SecretKeyFactory.getInstance(this.secretKeyFactoryAlgorithm);
                     
                     this.key = factory.generateSecret(pbeKeySpec);
                     
-                    this.encryptCipher = Cipher.getInstance(this.algorithm);
-                    this.decryptCipher = Cipher.getInstance(this.algorithm);
+                    this.encryptCipher = Cipher.getInstance(this.cipherAlgorithm);
+                    this.decryptCipher = Cipher.getInstance(this.cipherAlgorithm);
                     
                 }
 
