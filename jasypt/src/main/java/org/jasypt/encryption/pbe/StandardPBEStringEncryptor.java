@@ -280,6 +280,10 @@ public final class StandardPBEStringEncryptor implements PBEStringCleanablePassw
         this.byteEncryptor.setAlgorithm(algorithm);
     }
 
+    /** Sets the SecretKeyFactory algorithm and Cipher algorithm respectively. */
+    public void setAlgorithm(String secretKeyFactoryAlgorithm, String cipherAlgorithm) {
+        this.byteEncryptor.setAlgorithm(secretKeyFactoryAlgorithm, cipherAlgorithm);
+    }
     
     /**
      * <p>
