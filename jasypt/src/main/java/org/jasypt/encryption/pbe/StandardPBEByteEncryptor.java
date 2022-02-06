@@ -296,15 +296,10 @@ public final class StandardPBEByteEncryptor implements PBEByteCleanablePasswordE
      * @param algorithm the name of the algorithm to be used.
      */
     public synchronized void setAlgorithm(String algorithm) {
-        CommonUtils.validateNotEmpty(algorithm, "Algorithm cannot be set empty");
-        if (isInitialized()) {
-            throw new AlreadyInitializedException();
-        }
-        this.secretKeyFactoryAlgorithm = algorithm;
-        this.cipherAlgorithm = algorithm;
-        this.algorithmSet = true;
+        setAlgorithm(algorithm, algorithm);
     }
 
+    // added by HMS
     /** Sets the SecretKeyFactory algorithm and Cipher algorithm respectively. */
     public synchronized void setAlgorithm(String secretKeyFactoryAlgorithm, String cipherAlgorithm) {
         CommonUtils.validateNotEmpty(secretKeyFactoryAlgorithm, "SecretKeyFactory Algorithm cannot be set empty");

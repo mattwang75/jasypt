@@ -141,6 +141,7 @@
         </configuration>
       </plugin>
       
+      <!-- HMS note: javadoc generation failed, can't figure out how to resolve it; just skip it as we don't really care -->
       <!-- plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-javadoc-plugin</artifactId>
@@ -175,6 +176,7 @@
         </executions>
       </plugin>
       
+      <!-- HMS note: don't bother going through the steps of signing -->
       <!-- plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-gpg-plugin</artifactId>
