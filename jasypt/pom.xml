@@ -24,7 +24,7 @@
   <groupId>org.jasypt</groupId>
   <artifactId>jasypt</artifactId>
   <packaging>jar</packaging>
-  <version>1.9.3</version>
+  <version>1.9.3-HMS</version>
   <name>JASYPT: Java Simplified Encryption</name>
   <url>http://www.jasypt.org</url>
 
@@ -141,7 +141,8 @@
         </configuration>
       </plugin>
       
-      <plugin>
+      <!-- HMS note: javadoc generation failed, can't figure out how to resolve it; just skip it as we don't really care -->
+      <!-- plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-javadoc-plugin</artifactId>
         <version>3.0.1</version>
@@ -159,7 +160,7 @@
             </goals>
           </execution>
         </executions>
-      </plugin>
+      </plugin -->
       
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -175,7 +176,8 @@
         </executions>
       </plugin>
       
-      <plugin>
+      <!-- HMS note: don't bother going through the steps of signing -->
+      <!-- plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-gpg-plugin</artifactId>
         <version>1.1</version>
@@ -188,7 +190,7 @@
             </goals>
           </execution>
         </executions>
-      </plugin>
+      </plugin -->
        
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>

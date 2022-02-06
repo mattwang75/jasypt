@@ -78,7 +78,7 @@ public class RandomSaltGenerator implements SaltGenerator {
             throw new EncryptionInitializationException(e);
         }
     }
-    
+
 
     /**
      * Generate a random salt of the specified length in bytes.
